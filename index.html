@@ -376,7 +376,6 @@
   }
 
   /* ---- Mirror (image) ---- */
-  /* Only the line ABOVE the mirror stays centered; everything else in Act III follows the section's left-align */
   .mirror-line {
     text-align: center !important;
     margin-bottom: 50px;
@@ -400,12 +399,6 @@
     height: 140px;
     background: linear-gradient(to bottom, rgba(244, 239, 227, 0), var(--paper) 100%);
   }
-
-  /* ===================================================
-     S3+ DISPLAY TYPEFACE — Instrument Serif
-     A distinct serif from Fraunces. Editorial, modern, leaner letterforms.
-     Used for headings & titles from S3 onward. Brand wordmarks stay Fraunces.
-     =================================================== */
 
   /* ===================================================
      S3 — WHAT IT IS  (clean cream, back to website feel)
@@ -458,7 +451,6 @@
     background: var(--faint-ink);
   }
 
-  /* Instrument Serif italic for the lead — modern editorial, distinct from Fraunces */
   .s3-lead {
     font-family: 'Instrument Serif', 'Times New Roman', serif;
     font-style: italic;
@@ -722,7 +714,6 @@
     height: 1px;
     background: rgba(250, 247, 240, 0.25);
   }
-  /* Founder body in Instrument Serif italic — same display family as S3+, distinct from S2's Fraunces */
   .founder-body {
     font-family: 'Instrument Serif', 'Times New Roman', serif;
     font-style: italic;
@@ -755,8 +746,7 @@
   }
 
   /* ===================================================
-     FOOTER — dark ink, the sideways closing
-     Brand wordmark stays Fraunces (consistent brand identity across the page)
+     FOOTER
      =================================================== */
   .footer {
     background: var(--ink-deep);
@@ -901,11 +891,50 @@
     grid-template-columns: 1fr 1fr;
     gap: 56px;
     align-items: start;
+    position: relative;
+  }
+
+  /* ---- CONNECTOR (waveform → dialogue) ---- */
+  .pv-connector {
+    position: absolute;
+    top: 18px;
+    left: calc(50% - 36px);
+    right: calc(50% - 30px);
+    height: 28px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .product-visual.is-active .pv-connector {
+    opacity: 1;
+    transition-delay: 0.85s;
+  }
+  .pv-connector svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    display: block;
+  }
+  .pv-connector .pv-connector-path {
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 1;
+    stroke-linecap: round;
+    opacity: 0.7;
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+  }
+  .product-visual.is-active .pv-connector .pv-connector-path {
+    animation: pvConnectorDraw 0.9s 0.95s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+  @keyframes pvConnectorDraw {
+    to { stroke-dashoffset: 0; }
   }
 
   /* ---- MIC ZONE (left) ---- */
   .pv-mic-zone {
-    padding-top: 14px;
+    padding-top: 0;
+    text-align: right;
     opacity: 0;
     transform: translateY(10px);
     transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
@@ -919,8 +948,10 @@
   .pv-mic-row {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-top: 18px;
+    margin-bottom: 0;
     font-size: 10.5px;
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -940,7 +971,6 @@
   .pv-mic-label { font-weight: 500; }
 
   .pv-rec {
-    margin-left: auto;
     display: inline-flex;
     align-items: center;
     gap: 7px;
@@ -964,30 +994,17 @@
   }
 
   .pv-waveform {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 5px;
     height: 64px;
     position: relative;
+    max-width: 100%;
   }
-  .pv-waveform::after {
-    content: "";
-    position: absolute;
-    right: -34px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 30px;
-    height: 1px;
-    background: linear-gradient(to right, rgba(27,26,23,0.22), rgba(27,26,23,0));
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.5s ease 0.9s;
-  }
-  .product-visual.is-active .pv-waveform::after { opacity: 1; }
+  .pv-waveform::after { content: none; }
   .pv-waveform span {
-    flex: 1;
-    min-width: 2.5px;
-    max-width: 4px;
+    flex: 0 0 auto;
+    width: 5px;
     background: var(--ink);
     border-radius: 1.5px;
     height: 8px;
@@ -1253,6 +1270,9 @@
     /* Product visual — stack on mobile */
     .product-visual { margin: 60px 0 50px; width: 92vw; }
     .pv-grid { grid-template-columns: 1fr; gap: 32px; }
+    .pv-connector { display: none; }
+    .pv-mic-zone { text-align: left; }
+    .pv-mic-row { justify-content: flex-start; }
     .pv-mic-zone { padding-top: 0; }
     .pv-waveform { height: 56px; gap: 4px; }
     .pv-waveform::after { display: none; }
@@ -1315,7 +1335,6 @@
 
       <div class="asterism">⁋</div>
 
-      <!-- ACT III — only the line above the mirror is centered; rest is left-aligned -->
       <div class="act act-mirror">
         <p class="mirror-line">Now look at a creator.</p>
 
@@ -1341,6 +1360,35 @@
       <div class="product-visual" id="productVisual">
         <div class="pv-grid">
           <div class="pv-mic-zone">
+            <div class="pv-waveform">
+              <span style="--max:0.32; --delay:0s"></span>
+              <span style="--max:0.48; --delay:0.04s"></span>
+              <span style="--max:0.62; --delay:0.08s"></span>
+              <span style="--max:0.78; --delay:0.12s"></span>
+              <span style="--max:0.95; --delay:0.16s"></span>
+              <span style="--max:0.84; --delay:0.20s"></span>
+              <span style="--max:0.55; --delay:0.24s"></span>
+              <span style="--max:0.72; --delay:0.28s"></span>
+              <span style="--max:0.88; --delay:0.32s"></span>
+              <span style="--max:0.98; --delay:0.36s"></span>
+              <span style="--max:0.82; --delay:0.40s"></span>
+              <span style="--max:0.66; --delay:0s"></span>
+              <span style="--max:0.48; --delay:0.04s"></span>
+              <span style="--max:0.72; --delay:0.08s"></span>
+              <span style="--max:0.92; --delay:0.12s"></span>
+              <span style="--max:0.78; --delay:0.16s"></span>
+              <span style="--max:0.62; --delay:0.20s"></span>
+              <span style="--max:0.85; --delay:0.24s"></span>
+              <span style="--max:0.95; --delay:0.28s"></span>
+              <span style="--max:0.72; --delay:0.32s"></span>
+              <span style="--max:0.55; --delay:0.36s"></span>
+              <span style="--max:0.68; --delay:0.40s"></span>
+              <span style="--max:0.82; --delay:0s"></span>
+              <span style="--max:0.62; --delay:0.04s"></span>
+              <span style="--max:0.45; --delay:0.08s"></span>
+              <span style="--max:0.38; --delay:0.12s"></span>
+              <span style="--max:0.28; --delay:0.16s"></span>
+            </div>
             <div class="pv-mic-row">
               <div class="pv-mic-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -1356,25 +1404,13 @@
                 <span class="pv-rec-text">REC</span>
               </div>
             </div>
-            <div class="pv-waveform">
-              <span style="--max:0.42; --delay:0s"></span>
-              <span style="--max:0.62; --delay:0.04s"></span>
-              <span style="--max:0.78; --delay:0.08s"></span>
-              <span style="--max:0.95; --delay:0.12s"></span>
-              <span style="--max:0.84; --delay:0.16s"></span>
-              <span style="--max:0.55; --delay:0.20s"></span>
-              <span style="--max:0.72; --delay:0.24s"></span>
-              <span style="--max:0.88; --delay:0.28s"></span>
-              <span style="--max:0.98; --delay:0.32s"></span>
-              <span style="--max:0.82; --delay:0.36s"></span>
-              <span style="--max:0.66; --delay:0.40s"></span>
-              <span style="--max:0.48; --delay:0.04s"></span>
-              <span style="--max:0.72; --delay:0.08s"></span>
-              <span style="--max:0.92; --delay:0.12s"></span>
-              <span style="--max:0.62; --delay:0.16s"></span>
-              <span style="--max:0.45; --delay:0.20s"></span>
-              <span style="--max:0.38; --delay:0.24s"></span>
-            </div>
+          </div>
+
+          <!-- Connector: audio → dialogue -->
+          <div class="pv-connector" aria-hidden="true">
+            <svg viewBox="0 0 100 28" preserveAspectRatio="none" pathLength="100">
+              <path class="pv-connector-path" pathLength="100" d="M0 14 C 50 14, 50 4, 100 4"/>
+            </svg>
           </div>
 
           <div class="pv-tree">
