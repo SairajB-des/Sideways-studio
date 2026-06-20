@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Sideways Studio — v11</title>
+<title>Sideways Studio — v12</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
@@ -25,6 +25,7 @@
     --accent-soft: #C25842;
   }
 
+  html { scroll-behavior: smooth; }
   html, body {
     background: var(--paper);
     color: var(--ink);
@@ -333,6 +334,24 @@
     margin-top: -4px;
   }
 
+  /* Diamond sticker — applied to "It's the assistants." */
+  .diamond-sticker {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    background: var(--accent);
+    transform: rotate(38deg);
+    vertical-align: middle;
+    margin-left: 18px;
+    filter: drop-shadow(0 6px 14px rgba(179, 58, 46, 0.28)) drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+    position: relative;
+    top: -4px;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .diamond-sticker:hover {
+    transform: rotate(45deg) scale(1.12);
+  }
+
   .asterism {
     display: flex;
     justify-content: center;
@@ -487,14 +506,18 @@
   }
   .s3-closer-line .small {
     display: block;
-    margin-top: 10px;
-    font-style: normal;
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    font-size: 14px;
-    letter-spacing: 0.04em;
+    margin-top: 16px;
+    font-style: italic;
+    font-family: 'Instrument Serif', 'Times New Roman', serif;
+    font-weight: 400;
+    font-size: clamp(16px, 1.35vw, 19px);
+    letter-spacing: -0.005em;
     color: var(--soft-ink);
-    text-transform: uppercase;
+    text-transform: none;
+    line-height: 1.5;
+    max-width: 580px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   /* ===================================================
@@ -646,9 +669,10 @@
     font-size: 13px;
     line-height: 1.55;
     color: var(--soft-ink);
-    max-width: 420px;
+    max-width: none;
     margin-left: auto;
     margin-right: auto;
+    white-space: nowrap;
   }
 
   /* ===================================================
@@ -814,6 +838,13 @@
     margin-left: 18px;
   }
   .footer-legal a:hover { color: var(--cream); }
+  .footer-hashtag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.04em;
+    color: rgba(250, 247, 240, 0.55);
+    text-transform: lowercase;
+  }
 
   .footer-flourish {
     position: relative;
@@ -849,6 +880,321 @@
     transform: rotate(-90deg);
     transform-origin: right bottom;
     white-space: nowrap;
+  }
+
+  /* ===================================================
+     ACT IV — Product visual (voice → blocks)
+     =================================================== */
+  .product-visual {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 92vw;
+    max-width: 960px;
+    margin: 100px 0 80px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--ink);
+  }
+
+  .pv-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: start;
+  }
+
+  /* ---- MIC ZONE (left) ---- */
+  .pv-mic-zone {
+    padding-top: 14px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+  }
+  .product-visual.is-active .pv-mic-zone {
+    opacity: 1;
+    transform: none;
+    transition-delay: 0.15s;
+  }
+
+  .pv-mic-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--soft-ink);
+  }
+
+  .pv-mic-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pv-mic-icon svg { width: 100%; height: 100%; }
+
+  .pv-mic-label { font-weight: 500; }
+
+  .pv-rec {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .pv-rec-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--accent);
+    display: inline-block;
+  }
+  .product-visual.is-active .pv-rec-dot {
+    animation: pvRecPulse 1.4s ease-in-out infinite;
+    animation-delay: 0.4s;
+  }
+  @keyframes pvRecPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.55; transform: scale(0.78); }
+  }
+
+  .pv-waveform {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 64px;
+    position: relative;
+  }
+  .pv-waveform::after {
+    content: "";
+    position: absolute;
+    right: -34px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 1px;
+    background: linear-gradient(to right, rgba(27,26,23,0.22), rgba(27,26,23,0));
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease 0.9s;
+  }
+  .product-visual.is-active .pv-waveform::after { opacity: 1; }
+  .pv-waveform span {
+    flex: 1;
+    min-width: 2.5px;
+    max-width: 4px;
+    background: var(--ink);
+    border-radius: 1.5px;
+    height: 8px;
+    opacity: 0.85;
+  }
+  .product-visual.is-active .pv-waveform span {
+    animation: pvWave 1.2s ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+  }
+  @keyframes pvWave {
+    0%, 100% { height: 8px; }
+    50%      { height: calc(var(--max, 0.7) * 56px); }
+  }
+
+  /* ---- TREE (right) ---- */
+  .pv-tree { position: relative; }
+
+  .pv-block,
+  .pv-child { opacity: 0; transform: translateY(8px); }
+  .product-visual.is-active .pv-block.pv-dialogue {
+    animation: pvBlockIn 0.5s cubic-bezier(0.22,1,0.36,1) 1.1s forwards;
+  }
+  .product-visual.is-active .pv-child[data-appear="2.40"] {
+    animation: pvBlockIn 0.4s cubic-bezier(0.22,1,0.36,1) 2.4s forwards;
+  }
+  .product-visual.is-active .pv-child[data-appear="2.60"] {
+    animation: pvBlockIn 0.4s cubic-bezier(0.22,1,0.36,1) 2.6s forwards;
+  }
+  .product-visual.is-active .pv-child[data-appear="2.80"] {
+    animation: pvBlockIn 0.4s cubic-bezier(0.22,1,0.36,1) 2.8s forwards;
+  }
+  .product-visual.is-active .pv-child[data-appear="3.00"] {
+    animation: pvBlockIn 0.4s cubic-bezier(0.22,1,0.36,1) 3.0s forwards;
+  }
+  .product-visual.is-active .pv-child[data-appear="3.20"] {
+    animation: pvBlockIn 0.4s cubic-bezier(0.22,1,0.36,1) 3.2s forwards;
+  }
+  @keyframes pvBlockIn { to { opacity: 1; transform: none; } }
+
+  .pv-dialogue {
+    position: relative;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    padding: 12px 16px 12px 20px;
+    max-width: 460px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset, 0 6px 18px rgba(27,26,23,0.04);
+  }
+  .pv-dialogue .pv-rail {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    border-radius: 9px 0 0 9px;
+    background: var(--ink);
+  }
+  .pv-dialogue .pv-icon { color: var(--ink); }
+
+  .pv-icon {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pv-icon svg { width: 100%; height: 100%; }
+
+  .pv-content {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.45;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+    word-break: break-word;
+  }
+
+  .pv-children {
+    margin-top: 22px;
+    padding-left: 36px;
+    position: relative;
+    max-width: 380px;
+  }
+
+  .pv-trunk {
+    position: absolute;
+    left: 20px;
+    top: -10px;
+    bottom: 12px;
+    width: 1px;
+    background: var(--line);
+    transform-origin: top;
+    transform: scaleY(0);
+  }
+  .product-visual.is-active .pv-trunk {
+    animation: pvTrunkIn 0.7s cubic-bezier(0.22,1,0.36,1) 1.5s forwards;
+  }
+  @keyframes pvTrunkIn { to { transform: scaleY(1); } }
+
+  .pv-child {
+    position: relative;
+    margin-bottom: 10px;
+  }
+  .pv-child:last-child { margin-bottom: 0; }
+
+  .pv-branch {
+    position: absolute;
+    left: -16px;
+    top: 50%;
+    width: 16px;
+    height: 1px;
+    background: var(--line);
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+  .product-visual.is-active .pv-child[data-appear="2.40"] .pv-branch {
+    animation: pvBranchIn 0.3s cubic-bezier(0.22,1,0.36,1) 2.35s forwards;
+  }
+  .product-visual.is-active .pv-child[data-appear="2.60"] .pv-branch {
+    animation: pvBranchIn 0.3s cubic-bezier(0.22,1,0.36,1) 2.55s forwards;
+  }
+  .product-visual.is-active .pv-child[data-appear="2.80"] .pv-branch {
+    animation: pvBranchIn 0.3s cubic-bezier(0.22,1,0.36,1) 2.75s forwards;
+  }
+  .product-visual.is-active .pv-child[data-appear="3.00"] .pv-branch {
+    animation: pvBranchIn 0.3s cubic-bezier(0.22,1,0.36,1) 2.95s forwards;
+  }
+  .product-visual.is-active .pv-child[data-appear="3.20"] .pv-branch {
+    animation: pvBranchIn 0.3s cubic-bezier(0.22,1,0.36,1) 3.15s forwards;
+  }
+  @keyframes pvBranchIn { to { transform: scaleX(1); } }
+
+  .pv-block-row {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    position: relative;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 9px 14px 9px 17px;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.5) inset;
+  }
+  .pv-block-row .pv-rail {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    border-radius: 8px 0 0 8px;
+  }
+  .pv-child .pv-content { font-size: 12px; }
+
+  .pv-child[data-color="video"] .pv-rail { background: #B33A2E; }
+  .pv-child[data-color="video"] .pv-icon { color: #B33A2E; }
+  .pv-child[data-color="music"] .pv-rail { background: #C97B2E; }
+  .pv-child[data-color="music"] .pv-icon { color: #C97B2E; }
+  .pv-child[data-color="audio"] .pv-rail { background: #7A5A8F; }
+  .pv-child[data-color="audio"] .pv-icon { color: #7A5A8F; }
+  .pv-child[data-color="frame"] .pv-rail { background: #6F8C56; }
+  .pv-child[data-color="frame"] .pv-icon { color: #6F8C56; }
+  .pv-child[data-color="image"] .pv-rail { background: #5A7A9A; }
+  .pv-child[data-color="image"] .pv-icon { color: #5A7A9A; }
+
+  .pv-cursor {
+    display: inline-block;
+    width: 6px;
+    height: 1em;
+    background: var(--ink);
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: pvBlink 0.95s steps(2) infinite;
+  }
+  @keyframes pvBlink {
+    0%, 50% { opacity: 1; }
+    50.01%, 100% { opacity: 0; }
+  }
+
+  .pv-ghost {
+    margin-top: 18px;
+    max-width: 460px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px 10px 18px;
+    background: transparent;
+    border: 1px dashed rgba(27,26,23,0.18);
+    border-radius: 8px;
+    color: var(--soft-ink);
+    opacity: 0;
+  }
+  .product-visual.is-active .pv-ghost {
+    animation: pvGhostIn 1s cubic-bezier(0.22,1,0.36,1) 5.0s forwards;
+  }
+  @keyframes pvGhostIn { to { opacity: 0.55; } }
+  .pv-ghost-text {
+    font-style: italic;
+    font-size: 12px;
+    color: var(--soft-ink);
+  }
+  .pv-ghost .pv-cursor {
+    background: rgba(27,26,23,0.35);
   }
 
   /* ===================================================
@@ -898,10 +1244,27 @@
     .cred-stat { padding: 0 12px; }
     .cred-stat + .cred-stat::before { display: none; }
     .cta-section { padding: 100px 24px 120px; }
+    .cta-microcopy { white-space: normal; font-size: 12.5px; max-width: 360px; }
+    .s3-closer-line .small { font-size: 15px; }
     .founder { padding: 110px 24px 110px; }
     .founder-body { font-size: 20px; }
     .footer-flourish { padding-top: 24px; }
-    .footer-tag-end { display: none; }
+
+    /* Product visual — stack on mobile */
+    .product-visual { margin: 60px 0 50px; width: 92vw; }
+    .pv-grid { grid-template-columns: 1fr; gap: 32px; }
+    .pv-mic-zone { padding-top: 0; }
+    .pv-waveform { height: 56px; gap: 4px; }
+    .pv-waveform::after { display: none; }
+    .pv-mic-row { margin-bottom: 14px; }
+    .pv-children { max-width: 100%; padding-left: 30px; }
+    .pv-trunk { left: 14px; }
+    .pv-branch { left: -16px; width: 16px; }
+    .pv-dialogue { max-width: 100%; padding: 11px 14px 11px 17px; gap: 10px; }
+    .pv-content { font-size: 12px; }
+    .pv-child .pv-content { font-size: 11.5px; }
+    .pv-ghost { max-width: 100%; }
+    .diamond-sticker { width: 22px; height: 22px; margin-left: 12px; top: -3px; }
   }
 </style>
 </head>
@@ -923,7 +1286,7 @@
   </section>
 
   <!-- ============= S2 — THE STORY ============= -->
-  <section class="story">
+  <section class="story" id="story">
     <div class="story-inner">
       <div class="chapter-marker">The story of the visionary&rsquo;s tail</div>
 
@@ -945,7 +1308,7 @@
 
       <div class="act">
         <p>It&rsquo;s the reason a visionary gets to stay a visionary.</p>
-        <p class="beat is-accent">It&rsquo;s the assistants.</p>
+        <p class="beat is-accent">It&rsquo;s the assistants. <span class="diamond-sticker" aria-hidden="true"></span></p>
         <p>Of those people. In those rooms.</p>
         <p>The deal is simple: the leader keeps their hands on the vision, because someone else has their hands on everything else.</p>
       </div>
@@ -972,6 +1335,150 @@
       <div class="act">
         <p>Meet your assistant.</p>
         <p class="brand-line"><span class="diamond-inline"></span>Sideways Studio.</p>
+      </div>
+
+      <!-- ACT IV — Product visual: voice → blocks -->
+      <div class="product-visual" id="productVisual">
+        <div class="pv-grid">
+          <div class="pv-mic-zone">
+            <div class="pv-mic-row">
+              <div class="pv-mic-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="3" width="6" height="12" rx="3"/>
+                  <path d="M5 11a7 7 0 0 0 14 0"/>
+                  <path d="M12 18v3"/>
+                  <path d="M9 21h6"/>
+                </svg>
+              </div>
+              <div class="pv-mic-label">Voice</div>
+              <div class="pv-rec">
+                <span class="pv-rec-dot"></span>
+                <span class="pv-rec-text">REC</span>
+              </div>
+            </div>
+            <div class="pv-waveform">
+              <span style="--max:0.42; --delay:0s"></span>
+              <span style="--max:0.62; --delay:0.04s"></span>
+              <span style="--max:0.78; --delay:0.08s"></span>
+              <span style="--max:0.95; --delay:0.12s"></span>
+              <span style="--max:0.84; --delay:0.16s"></span>
+              <span style="--max:0.55; --delay:0.20s"></span>
+              <span style="--max:0.72; --delay:0.24s"></span>
+              <span style="--max:0.88; --delay:0.28s"></span>
+              <span style="--max:0.98; --delay:0.32s"></span>
+              <span style="--max:0.82; --delay:0.36s"></span>
+              <span style="--max:0.66; --delay:0.40s"></span>
+              <span style="--max:0.48; --delay:0.04s"></span>
+              <span style="--max:0.72; --delay:0.08s"></span>
+              <span style="--max:0.92; --delay:0.12s"></span>
+              <span style="--max:0.62; --delay:0.16s"></span>
+              <span style="--max:0.45; --delay:0.20s"></span>
+              <span style="--max:0.38; --delay:0.24s"></span>
+            </div>
+          </div>
+
+          <div class="pv-tree">
+            <div class="pv-block pv-dialogue" data-appear="1.1" data-type="1.3" data-text="She walks into the room and pauses, takes the room in." data-speed="24">
+              <span class="pv-rail"></span>
+              <span class="pv-icon" aria-hidden="true">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2.5 4.5a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H7l-3 2.5v-2.5h-.5a2 2 0 0 1-2-2z"/>
+                </svg>
+              </span>
+              <span class="pv-content"></span>
+            </div>
+
+            <div class="pv-children">
+              <div class="pv-trunk"></div>
+
+              <div class="pv-child" data-appear="2.40" data-color="video" data-type="2.60" data-text="Wide shot. Single window, side-lit." data-speed="18">
+                <span class="pv-branch"></span>
+                <span class="pv-block-row">
+                  <span class="pv-rail"></span>
+                  <span class="pv-icon" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="1.5" y="5" width="9" height="6" rx="1.2"/>
+                      <path d="M10.5 7l3.5-2v6l-3.5-2z" fill="currentColor" stroke="none"/>
+                    </svg>
+                  </span>
+                  <span class="pv-content"></span>
+                </span>
+              </div>
+
+              <div class="pv-child" data-appear="2.60" data-color="music" data-type="2.80" data-text="Piano motif, soft. ~60 bpm, ducked." data-speed="18">
+                <span class="pv-branch"></span>
+                <span class="pv-block-row">
+                  <span class="pv-rail"></span>
+                  <span class="pv-icon" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="4" cy="11.5" r="1.6" fill="currentColor" stroke="none"/>
+                      <circle cx="11" cy="10" r="1.6" fill="currentColor" stroke="none"/>
+                      <path d="M5.5 11V3.5l7-1.2v7.2"/>
+                      <path d="M5.5 4.6l7-1.2"/>
+                    </svg>
+                  </span>
+                  <span class="pv-content"></span>
+                </span>
+              </div>
+
+              <div class="pv-child" data-appear="2.80" data-color="audio" data-type="3.00" data-text="Room tone. Footsteps soft on wood." data-speed="18">
+                <span class="pv-branch"></span>
+                <span class="pv-block-row">
+                  <span class="pv-rail"></span>
+                  <span class="pv-icon" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                      <line x1="2.5" y1="7" x2="2.5" y2="9"/>
+                      <line x1="5.5" y1="5" x2="5.5" y2="11"/>
+                      <line x1="8" y1="2.5" x2="8" y2="13.5"/>
+                      <line x1="10.5" y1="5" x2="10.5" y2="11"/>
+                      <line x1="13.5" y1="6.5" x2="13.5" y2="9.5"/>
+                    </svg>
+                  </span>
+                  <span class="pv-content"></span>
+                </span>
+              </div>
+
+              <div class="pv-child" data-appear="3.00" data-color="frame" data-type="3.20" data-text="Slow push in, 1.5s. Hold on her eyes." data-speed="18">
+                <span class="pv-branch"></span>
+                <span class="pv-block-row">
+                  <span class="pv-rail"></span>
+                  <span class="pv-icon" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M2 5V2.5h2.5"/>
+                      <path d="M11.5 2.5H14V5"/>
+                      <path d="M14 11v2.5h-2.5"/>
+                      <path d="M4.5 13.5H2V11"/>
+                    </svg>
+                  </span>
+                  <span class="pv-content"></span>
+                </span>
+              </div>
+
+              <div class="pv-child" data-appear="3.20" data-color="image" data-type="3.40" data-text="ref: Roma, 0:42 · The Conformist, 1:18" data-speed="18">
+                <span class="pv-branch"></span>
+                <span class="pv-block-row">
+                  <span class="pv-rail"></span>
+                  <span class="pv-icon" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="2" y="3" width="12" height="10" rx="1.4"/>
+                      <circle cx="5.4" cy="6.4" r="0.9" fill="currentColor" stroke="none"/>
+                      <path d="M2.5 12l3.5-3.5 3 3 2.5-2.5 2 2"/>
+                    </svg>
+                  </span>
+                  <span class="pv-content"></span>
+                </span>
+              </div>
+            </div>
+
+            <div class="pv-ghost" data-appear="5.0">
+              <span class="pv-content pv-ghost-text">The next beat is forming&hellip;</span>
+              <span class="pv-cursor"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="act">
         <p>Built for the creator&rsquo;s workflow.</p>
         <p>It keeps its hands on everything else&hellip;</p>
         <p>So you can keep your hands on your vision.</p>
@@ -986,7 +1493,7 @@
   <!-- ============= S3 — WHAT IT IS ============= -->
   <section class="section-light is-first s3">
     <div class="s3-inner">
-      <div class="section-label">What it is</div>
+      <div class="section-label">Welcome to Sideways Studio</div>
 
       <p class="s3-lead">
         One plan, <span class="accent">from the idea in your head</span><br />
@@ -1003,8 +1510,8 @@
 
       <div class="s3-closer">
         <p class="s3-closer-line">
-          One plan. From the idea in your head, to the final cut.
-          <span class="small">On your phone.</span>
+          Focus on the vision of your content.
+          <span class="small">&amp; let Sideways Studio ensure you see it through &mdash; from the plan to the post.</span>
         </p>
       </div>
     </div>
@@ -1031,8 +1538,8 @@
   <!-- ============= FINAL CTA ============= -->
   <section class="cta-section" id="waitlist">
     <div class="cta-inner">
-      <h2 class="cta-headline">If this is your reality &mdash;<br />I&rsquo;d love to hear from you.</h2>
-      <p class="cta-sub">I&rsquo;m building Sideways for creators like you. Right now I want to understand how you work more than I want to sell anything.</p>
+      <h2 class="cta-headline">I&rsquo;m building Sideways for creators.</h2>
+      <p class="cta-sub">I want to understand how more creators work more than I want to sell anything.</p>
 
       <form class="cta-form" onsubmit="event.preventDefault();">
         <input type="text" placeholder="Your name" autocomplete="name" />
@@ -1045,12 +1552,13 @@
   </section>
 
   <!-- ============= FOUNDER NOTE ============= -->
-  <section class="founder">
+  <section class="founder" id="founder">
     <div class="founder-inner">
       <div class="founder-label">A note from the founder</div>
       <div class="founder-body">
         <p>I&rsquo;m a cinematographer and a UX designer. The two don&rsquo;t often meet &mdash; but Sideways Studio is where they do.</p>
-        <p>I built the planning system 1,900+ creators use because I kept losing my own ideas and rebuilding my plans from scratch, every video. Now I&rsquo;m building the product it was always meant to be &mdash; in the open, with creators who feel this too.</p>
+        <p>When I got into cinematography, I faced a lot of challenges as a creator which I began solving using my other skills. Soon, 1,900+ creators began using the design I had made for their video planning.</p>
+        <p>Now I&rsquo;m building it into the product it was always meant to be &mdash; in public. &amp; I want to build it with other creators, a solution that truly caters to the creator workflow.</p>
       </div>
       <div class="founder-signature">Sairaj</div>
     </div>
@@ -1069,32 +1577,83 @@
 
       <div class="footer-col">
         <h4>Connect</h4>
-        <a href="#">Instagram</a>
-        <a href="#">YouTube</a>
-        <a href="#">Email</a>
+        <a href="https://www.instagram.com/made__sideways?igsh=MTRleGFidmZmbXQ2eg==" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://youtu.be/DrCuBNrzHHQ?si=E2ycwzvWjFvReWJk" target="_blank" rel="noopener">YouTube</a>
+        <a href="mailto:sairajbhagat2001@gmail.com">Email</a>
       </div>
 
       <div class="footer-col">
         <h4>About</h4>
-        <a href="#">The story</a>
-        <a href="#">Founder note</a>
-        <a href="#">Press</a>
+        <a href="#story">The story</a>
+        <a href="#founder">Founder note</a>
       </div>
     </div>
 
     <div class="footer-bottom">
       <div class="footer-copy">© Sideways Studio. All rights reserved.</div>
       <div class="footer-legal">
-        <a href="#">Privacy</a>
-        <a href="#">Terms</a>
+        <span class="footer-hashtag">#the future is Sideways</span>
       </div>
     </div>
 
     <div class="footer-flourish">
       <div class="footer-bigmark">Sideways</div>
-      <div class="footer-tag-end">#the future is sideways</div>
     </div>
   </footer>
 
+<script>
+(function() {
+  var visual = document.getElementById('productVisual');
+  if (!visual) return;
+  var fired = false;
+
+  function typewriter(el, text, speed, jitter) {
+    var target = el.querySelector('.pv-content');
+    if (!target) return;
+    target.textContent = '';
+    var i = 0;
+    function step() {
+      if (i <= text.length) {
+        target.textContent = text.slice(0, i);
+        i++;
+        var delay = speed + (Math.random() * 2 - 1) * jitter;
+        setTimeout(step, Math.max(8, delay));
+      } else {
+        var cursor = document.createElement('span');
+        cursor.className = 'pv-cursor';
+        target.appendChild(cursor);
+      }
+    }
+    step();
+  }
+
+  function start() {
+    if (fired) return;
+    fired = true;
+    visual.classList.add('is-active');
+    var blocks = visual.querySelectorAll('.pv-block, .pv-child');
+    blocks.forEach(function(block) {
+      var typeAt = parseFloat(block.dataset.type);
+      var text = block.dataset.text;
+      var speed = parseInt(block.dataset.speed, 10) || 18;
+      var jitter = speed * 0.4;
+      if (!isNaN(typeAt) && text) {
+        setTimeout(function() { typewriter(block, text, speed, jitter); }, typeAt * 1000);
+      }
+    });
+  }
+
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting && !fired) start();
+      });
+    }, { threshold: 0.22, rootMargin: '0px 0px -8% 0px' });
+    observer.observe(visual);
+  } else {
+    setTimeout(start, 800);
+  }
+})();
+</script>
 </body>
 </html>
