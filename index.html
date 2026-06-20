@@ -185,6 +185,34 @@
   .hero-cta .arrow { transition: transform 0.18s ease; }
   .hero-cta:hover .arrow { transform: translateX(3px); }
 
+  .hero-mark {
+    position: absolute;
+    top: 32px;
+    right: 36px;
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    animation: heroFadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.55s forwards;
+  }
+  .hero-mark .diamond {
+    width: 10px;
+    height: 10px;
+    background: var(--accent);
+    transform: rotate(45deg);
+    display: inline-block;
+  }
+  .hero-mark .wordmark {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 144, "SOFT" 0;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 18px;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+  }
+
   .scroll-invite {
     position: absolute;
     left: 50%;
@@ -287,29 +315,82 @@
     padding-right: 4px;
   }
 
-  .rooms-wrap {
-    clear: both;
+  .rooms-act {
     position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 92vw;
-    max-width: 1040px;
-    margin: 110px 0 70px;
-    display: flex;
-    align-items: stretch;
-    gap: 18px;
-    filter: drop-shadow(0 14px 26px rgba(27, 26, 23, 0.16));
+    margin: 90px 0 130px;
   }
-  .rooms-wrap img {
+  .rooms-act .act { position: relative; z-index: 2; }
+  .rooms-act .act-gap { margin-top: 56px !important; }
+
+  .room-fragment {
+    position: absolute;
+    width: clamp(150px, 15vw, 215px);
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+    animation: roomFragmentIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  .room-fragment img {
     display: block;
-    flex: 1 1 0;
-    min-width: 0;
     width: 100%;
     height: auto;
-    object-fit: cover;
+    filter: drop-shadow(0 18px 32px rgba(27, 26, 23, 0.20));
+    border-radius: 2px;
+  }
+  .room-fragment figcaption {
+    margin-top: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--soft-ink);
+    text-align: center;
+  }
+
+  .room-fragment.r1 {
+    left: -240px;
+    top: -30px;
+    transform: rotate(-5deg);
+    animation-delay: 0.15s;
+  }
+  .room-fragment.r2 {
+    right: -260px;
+    top: 110px;
+    transform: rotate(4deg);
+    animation-delay: 0.35s;
+  }
+  .room-fragment.r3 {
+    left: -220px;
+    bottom: -20px;
+    transform: rotate(-3deg);
+    animation-delay: 0.55s;
+  }
+
+  @keyframes roomFragmentIn {
+    to { opacity: 1; }
+  }
+
+  @media (max-width: 1240px) {
+    .room-fragment { width: clamp(125px, 13vw, 175px); }
+    .room-fragment.r1 { left: -175px; }
+    .room-fragment.r2 { right: -185px; }
+    .room-fragment.r3 { left: -160px; }
+  }
+  @media (max-width: 980px) {
+    .rooms-act { margin: 110px 0 130px; }
+    .room-fragment { width: 135px; }
+    .room-fragment.r1 { left: 0; top: -150px; transform: rotate(-5deg); }
+    .room-fragment.r2 { right: 0; top: -150px; transform: rotate(4deg); }
+    .room-fragment.r3 { left: 50%; bottom: -150px; transform: translateX(-50%) rotate(-3deg); }
   }
   @media (max-width: 640px) {
-    .rooms-wrap { gap: 8px; margin: 70px 0 50px; }
+    .rooms-act { margin: 90px 0 120px; }
+    .room-fragment { width: 108px; }
+    .room-fragment.r1 { left: 0; top: -130px; transform: rotate(-4deg); }
+    .room-fragment.r2 { right: 0; top: -130px; transform: rotate(3deg); }
+    .room-fragment.r3 { left: 50%; bottom: -130px; transform: translateX(-50%) rotate(-2deg); }
+    .room-fragment figcaption { font-size: 9px; letter-spacing: 0.2em; margin-top: 8px; }
   }
 
   .beat {
@@ -1262,7 +1343,6 @@
     .mirror-img { width: 240px; }
     .asterism { margin: 80px 0; }
     .hero-fade { height: 200px; }
-    .rooms-wrap { margin: 70px 0 50px; }
     .s3 { padding: 120px 24px 100px; }
     .s3-lead { font-size: 28px; margin-bottom: 60px; }
     .s3-body { font-size: 16px; }
@@ -1304,13 +1384,18 @@
     <img src="studio-colored.jpg" alt="" class="hero-img" />
     <div class="hero-cloud"></div>
 
+    <div class="hero-mark">
+      <span class="diamond"></span>
+      <span class="wordmark">Sideways studio</span>
+    </div>
+
     <div class="hero-text">
       <h1 class="headline">Every creator is an <span class="nobreak">all-in-one</span> studio</h1>
       <p class="subline">And every great studio needs an assistant. Now you have one too.</p>
-      <a href="#waitlist" class="hero-cta">Join the waitlist <span class="arrow">&rarr;</span></a>
+      <a href="#waitlist" class="hero-cta">I&rsquo;m interested <span class="arrow">&rarr;</span></a>
     </div>
 
-    <div class="scroll-invite">See why &darr;</div>
+    <div class="scroll-invite">The story &darr;</div>
     <div class="hero-fade"></div>
   </section>
 
@@ -1319,20 +1404,26 @@
     <div class="story-inner">
       <div class="chapter-marker">The story of the visionary&rsquo;s tail</div>
 
-      <div class="act">
-        <p><span class="drop-cap">B</span>oardrooms. War rooms. The Oval Office.</p>
-        <p>These are rooms where vision gets executed.</p>
-      </div>
+      <div class="rooms-act">
+        <figure class="room-fragment r1">
+          <img src="room-1.png" alt="" />
+          <figcaption>Boardrooms</figcaption>
+        </figure>
+        <figure class="room-fragment r2">
+          <img src="room-2.png" alt="" />
+          <figcaption>War rooms</figcaption>
+        </figure>
+        <figure class="room-fragment r3">
+          <img src="room-3.png" alt="" />
+          <figcaption>The Oval Office</figcaption>
+        </figure>
 
-      <div class="rooms-wrap">
-        <img src="room-1.png" alt="" />
-        <img src="room-2.png" alt="" />
-        <img src="room-3.png" alt="" />
-      </div>
-
-      <div class="act">
-        <p>Every name on these doors is famous.</p>
-        <p>But they all share one thing.</p>
+        <div class="act">
+          <p><span class="drop-cap">B</span>oardrooms. War rooms. The Oval Office.</p>
+          <p>These are rooms where vision gets executed.</p>
+          <p class="act-gap">Every name on these doors is famous.</p>
+          <p>But they all share one thing.</p>
+        </div>
       </div>
 
       <div class="asterism">⁋</div>
@@ -1543,12 +1634,11 @@
       <div class="section-label">Welcome to Sideways Studio</div>
 
       <p class="s3-lead">
-        One plan, <span class="accent">from the idea in your head</span><br />
-        to the final cut.
+        Any time an idea strikes &mdash; <span class="accent">on a walk, mid-conversation, at 2am.</span>
       </p>
 
       <div class="s3-body">
-        <p>Any time an idea strikes &mdash; on a walk, mid-conversation, at 2am &mdash; tap a widget, talk it out, and Sideways transcribes it, understands it, and turns it into a <span class="hl">structured, shoot-ready first draft</span> automatically.</p>
+        <p>Tap a widget, talk it out, and Sideways transcribes it, understands it, and turns it into a <span class="hl">structured, shoot-ready first draft</span> automatically.</p>
 
         <p>That plan then follows you through your entire workflow: a block system that organizes your script, shots, music, sound effects, and text, all in one place. Use it to run through your shot list on the shoot, open the timeline view when you&rsquo;re editing. <span class="hl">No more using five different tools.</span></p>
 
@@ -1557,8 +1647,8 @@
 
       <div class="s3-closer">
         <p class="s3-closer-line">
-          Focus on the vision of your content.
-          <span class="small">&amp; let Sideways Studio ensure you see it through &mdash; from the plan to the post.</span>
+          One plan, from the idea in your head to the final cut.
+          <span class="small">On your phone.</span>
         </p>
       </div>
     </div>
@@ -1585,8 +1675,8 @@
   <!-- ============= FINAL CTA ============= -->
   <section class="cta-section" id="waitlist">
     <div class="cta-inner">
-      <h2 class="cta-headline">I&rsquo;m building Sideways for creators.</h2>
-      <p class="cta-sub">I want to understand how more creators work more than I want to sell anything.</p>
+      <h2 class="cta-headline">Are you that creator?</h2>
+      <p class="cta-sub">I&rsquo;d love to hear from you. Right now I want to understand how you create more than selling you anything.</p>
 
       <form class="cta-form" onsubmit="event.preventDefault();">
         <input type="text" placeholder="Your name" autocomplete="name" />
@@ -1603,9 +1693,8 @@
     <div class="founder-inner">
       <div class="founder-label">A note from the founder</div>
       <div class="founder-body">
-        <p>I&rsquo;m a cinematographer and a UX designer. The two don&rsquo;t often meet &mdash; but Sideways Studio is where they do.</p>
-        <p>When I got into cinematography, I faced a lot of challenges as a creator which I began solving using my other skills. Soon, 1,900+ creators began using the design I had made for their video planning.</p>
-        <p>Now I&rsquo;m building it into the product it was always meant to be &mdash; in public. &amp; I want to build it with other creators, a solution that truly caters to the creator workflow.</p>
+        <p>I&rsquo;m a Product designer who&rsquo;s practicing cinematography, a story teller who scores music. Creativity does not follow straight lines. Sideways Studio is the idea where it&rsquo;s all intersecting for me.</p>
+        <p>When I got into cinematography, I faced a lot of challenges as a creator which I began solving using my other skills. Soon, 1,900+ creators began using the design I had built for their video planning. Now I&rsquo;m building it into the product it was always meant to be &mdash; in public. &amp; I want to build it with other creators, for every creator and every one who wants to get into this passion.</p>
       </div>
       <div class="founder-signature">Sairaj</div>
     </div>
