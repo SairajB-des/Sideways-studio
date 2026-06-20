@@ -188,7 +188,7 @@
   .hero-mark {
     position: absolute;
     top: 32px;
-    right: 36px;
+    left: 36px;
     z-index: 6;
     display: flex;
     align-items: center;
@@ -211,6 +211,10 @@
     font-size: 18px;
     letter-spacing: -0.005em;
     color: var(--ink);
+  }
+  @media (max-width: 640px) {
+    .hero-mark { top: 24px; left: 20px; gap: 8px; }
+    .hero-mark .wordmark { font-size: 16px; }
   }
 
   .scroll-invite {
@@ -315,29 +319,28 @@
     padding-right: 4px;
   }
 
-  .rooms-act {
+  .rooms-stair {
     position: relative;
-    margin: 90px 0 130px;
+    width: 100%;
+    max-width: 620px;
+    margin: 90px auto;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 0;
   }
-  .rooms-act .act { position: relative; z-index: 2; }
-  .rooms-act .act-gap { margin-top: 56px !important; }
-
-  .room-fragment {
-    position: absolute;
-    width: clamp(150px, 15vw, 215px);
-    z-index: 1;
-    pointer-events: none;
+  .room-stair {
+    margin: 0;
     opacity: 0;
-    animation: roomFragmentIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation: roomStairIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
-  .room-fragment img {
+  .room-stair img {
     display: block;
     width: 100%;
     height: auto;
     filter: drop-shadow(0 18px 32px rgba(27, 26, 23, 0.20));
     border-radius: 2px;
   }
-  .room-fragment figcaption {
+  .room-stair figcaption {
     margin-top: 11px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
@@ -347,50 +350,48 @@
     color: var(--soft-ink);
     text-align: center;
   }
-
-  .room-fragment.r1 {
-    left: -240px;
-    top: -30px;
-    transform: rotate(-5deg);
-    animation-delay: 0.15s;
-  }
-  .room-fragment.r2 {
-    right: -260px;
-    top: 110px;
-    transform: rotate(4deg);
-    animation-delay: 0.35s;
-  }
-  .room-fragment.r3 {
-    left: -220px;
-    bottom: -20px;
+  .room-stair.r1 {
+    grid-column: 1 / span 5;
+    grid-row: 1;
     transform: rotate(-3deg);
-    animation-delay: 0.55s;
+    animation-delay: 0.15s;
+    z-index: 1;
   }
-
-  @keyframes roomFragmentIn {
+  .room-stair.r2 {
+    grid-column: 8 / span 5;
+    grid-row: 1;
+    transform: rotate(2deg);
+    margin-top: 36px;
+    animation-delay: 0.35s;
+    z-index: 2;
+  }
+  .room-stair.r3 {
+    grid-column: 4 / span 6;
+    grid-row: 2;
+    transform: rotate(-3deg);
+    margin-top: 28px;
+    animation-delay: 0.55s;
+    z-index: 1;
+  }
+  @keyframes roomStairIn {
     to { opacity: 1; }
   }
-
-  @media (max-width: 1240px) {
-    .room-fragment { width: clamp(125px, 13vw, 175px); }
-    .room-fragment.r1 { left: -175px; }
-    .room-fragment.r2 { right: -185px; }
-    .room-fragment.r3 { left: -160px; }
-  }
-  @media (max-width: 980px) {
-    .rooms-act { margin: 110px 0 130px; }
-    .room-fragment { width: 135px; }
-    .room-fragment.r1 { left: 0; top: -150px; transform: rotate(-5deg); }
-    .room-fragment.r2 { right: 0; top: -150px; transform: rotate(4deg); }
-    .room-fragment.r3 { left: 50%; bottom: -150px; transform: translateX(-50%) rotate(-3deg); }
-  }
-  @media (max-width: 640px) {
-    .rooms-act { margin: 90px 0 120px; }
-    .room-fragment { width: 108px; }
-    .room-fragment.r1 { left: 0; top: -130px; transform: rotate(-4deg); }
-    .room-fragment.r2 { right: 0; top: -130px; transform: rotate(3deg); }
-    .room-fragment.r3 { left: 50%; bottom: -130px; transform: translateX(-50%) rotate(-2deg); }
-    .room-fragment figcaption { font-size: 9px; letter-spacing: 0.2em; margin-top: 8px; }
+  @media (max-width: 768px) {
+    .rooms-stair {
+      display: block;
+      margin: 70px auto;
+      max-width: 88vw;
+    }
+    .room-stair {
+      display: block;
+      width: 100%;
+      max-width: 220px;
+      margin: 0 auto 36px;
+    }
+    .room-stair:last-child { margin-bottom: 0; }
+    .room-stair.r1 { transform: rotate(-3deg) translateX(-14px); margin-top: 0; }
+    .room-stair.r2 { transform: rotate(2deg) translateX(16px); margin-top: 0; }
+    .room-stair.r3 { transform: rotate(-3deg) translateX(-6px); margin-top: 0; }
   }
 
   .beat {
@@ -556,6 +557,15 @@
     margin-right: auto;
   }
   .s3-lead .accent { color: var(--accent); }
+  .s3-lead .lead-coda {
+    display: block;
+    margin-top: 14px;
+    font-style: italic;
+    font-family: 'Instrument Serif', 'Times New Roman', serif;
+    font-size: clamp(20px, 1.9vw, 30px);
+    color: var(--soft-ink);
+    letter-spacing: -0.012em;
+  }
 
   .s3-body {
     font-family: 'Inter', sans-serif;
@@ -581,25 +591,21 @@
     font-family: 'Instrument Serif', 'Times New Roman', serif;
     font-style: italic;
     font-weight: 400;
-    font-size: clamp(24px, 2.2vw, 34px);
-    line-height: 1.3;
-    letter-spacing: -0.018em;
+    font-size: clamp(30px, 3vw, 44px);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
     color: var(--ink);
+    margin: 0;
   }
-  .s3-closer-line .small {
-    display: block;
+  .s3-closer-sub {
     margin-top: 16px;
-    font-style: italic;
     font-family: 'Instrument Serif', 'Times New Roman', serif;
+    font-style: italic;
     font-weight: 400;
-    font-size: clamp(16px, 1.35vw, 19px);
-    letter-spacing: -0.005em;
-    color: var(--soft-ink);
-    text-transform: none;
+    font-size: clamp(15px, 1.25vw, 18px);
     line-height: 1.5;
-    max-width: 580px;
-    margin-left: auto;
-    margin-right: auto;
+    letter-spacing: 0.005em;
+    color: var(--soft-ink);
   }
 
   /* ===================================================
@@ -1392,7 +1398,7 @@
     <div class="hero-text">
       <h1 class="headline">Every creator is an <span class="nobreak">all-in-one</span> studio</h1>
       <p class="subline">And every great studio needs an assistant. Now you have one too.</p>
-      <a href="#waitlist" class="hero-cta">I&rsquo;m interested <span class="arrow">&rarr;</span></a>
+      <a href="#waitlist" class="hero-cta">I&rsquo;m interested</a>
     </div>
 
     <div class="scroll-invite">The story &darr;</div>
@@ -1404,26 +1410,29 @@
     <div class="story-inner">
       <div class="chapter-marker">The story of the visionary&rsquo;s tail</div>
 
-      <div class="rooms-act">
-        <figure class="room-fragment r1">
+      <div class="act">
+        <p><span class="drop-cap">B</span>oardrooms. War rooms. The Oval Office.</p>
+        <p>These are rooms where vision gets executed.</p>
+      </div>
+
+      <div class="rooms-stair">
+        <figure class="room-stair r1">
           <img src="room-1.png" alt="" />
           <figcaption>Boardrooms</figcaption>
         </figure>
-        <figure class="room-fragment r2">
+        <figure class="room-stair r2">
           <img src="room-2.png" alt="" />
           <figcaption>War rooms</figcaption>
         </figure>
-        <figure class="room-fragment r3">
+        <figure class="room-stair r3">
           <img src="room-3.png" alt="" />
           <figcaption>The Oval Office</figcaption>
         </figure>
+      </div>
 
-        <div class="act">
-          <p><span class="drop-cap">B</span>oardrooms. War rooms. The Oval Office.</p>
-          <p>These are rooms where vision gets executed.</p>
-          <p class="act-gap">Every name on these doors is famous.</p>
-          <p>But they all share one thing.</p>
-        </div>
+      <div class="act">
+        <p>Every name on these doors is famous.</p>
+        <p>But they all share one thing.</p>
       </div>
 
       <div class="asterism">⁋</div>
@@ -1445,9 +1454,9 @@
         </div>
 
         <p>Visionary. Writer. Director. Performer. Brand. Business &mdash; all in one.</p>
-        <p>Every idea, script, shot, cut, and post &mdash; over and over.</p>
+        <p>Every idea, script, shot, cut and post &mdash; over and over.</p>
         <p>It was never a talent problem.</p>
-        <p>Just the one thing every great operation has &mdash; was missing.</p>
+        <p>It was missing the one thing every visionary needs.</p>
         <p class="beat">Until now.</p>
       </div>
 
@@ -1631,14 +1640,15 @@
   <!-- ============= S3 — WHAT IT IS ============= -->
   <section class="section-light is-first s3">
     <div class="s3-inner">
-      <div class="section-label">Welcome to Sideways Studio</div>
+      <div class="section-label">Welcome to Sideways studio</div>
 
       <p class="s3-lead">
-        Any time an idea strikes &mdash; <span class="accent">on a walk, mid-conversation, at 2am.</span>
+        One plan, <span class="accent">from the idea in your head</span> to the final cut.
+        <span class="lead-coda">On your phone.</span>
       </p>
 
       <div class="s3-body">
-        <p>Tap a widget, talk it out, and Sideways transcribes it, understands it, and turns it into a <span class="hl">structured, shoot-ready first draft</span> automatically.</p>
+        <p>Any time an idea strikes &mdash; on a walk, mid-conversation, at 2am &mdash; tap a widget, talk it out, and Sideways transcribes it, understands it, and turns it into a <span class="hl">structured, shoot-ready first draft</span> automatically.</p>
 
         <p>That plan then follows you through your entire workflow: a block system that organizes your script, shots, music, sound effects, and text, all in one place. Use it to run through your shot list on the shoot, open the timeline view when you&rsquo;re editing. <span class="hl">No more using five different tools.</span></p>
 
@@ -1646,10 +1656,8 @@
       </div>
 
       <div class="s3-closer">
-        <p class="s3-closer-line">
-          One plan, from the idea in your head to the final cut.
-          <span class="small">On your phone.</span>
-        </p>
+        <p class="s3-closer-line">Create your Vision.</p>
+        <p class="s3-closer-sub">everything else is Sideways</p>
       </div>
     </div>
   </section>
