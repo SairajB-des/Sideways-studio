@@ -74,7 +74,8 @@
   .hero-cloud {
     position: absolute;
     left: 50%;
-    top: 60%;
+    /* Follows the text up so the headline keeps its soft legibility halo */
+    top: 42%;
     transform: translate(-50%, -50%);
     width: clamp(720px, 78vw, 1180px);
     height: clamp(440px, 58vh, 680px);
@@ -122,8 +123,9 @@
   .hero-text {
     position: absolute;
     left: 50%;
-    top: 62%;
-    transform: translate(-50%, -50%);
+    /* Top-anchored so the top of the headline lines up with the top of the monitor in the illustration */
+    top: 29%;
+    transform: translate(-50%, 0);
     text-align: center;
     z-index: 5;
     max-width: 820px;
@@ -811,6 +813,16 @@
     height: 1px;
     background: rgba(250, 247, 240, 0.25);
   }
+  .founder-photo {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 10px;
+    margin: 0 auto 56px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+  }
+
   .founder-body {
     font-family: 'Inter', sans-serif;
     font-weight: 400;
@@ -1398,7 +1410,7 @@
     <div class="hero-text">
       <h1 class="headline">Every creator is an <span class="nobreak">all-in-one</span> studio</h1>
       <p class="subline">And every great studio needs an assistant. Now you have one too.</p>
-      <a href="#waitlist" class="hero-cta">I&rsquo;m interested</a>
+      <a href="#act4" class="hero-cta">Meet your assistant</a>
     </div>
 
     <div class="scroll-invite">The story &darr;</div>
@@ -1462,7 +1474,7 @@
 
       <div class="asterism">⁋</div>
 
-      <div class="act">
+      <div class="act" id="act4">
         <p>Meet the creators assistant.</p>
         <p class="brand-line"><span class="diamond-inline"></span>Sideways Studio.</p>
       </div>
@@ -1700,6 +1712,7 @@
   <section class="founder" id="founder">
     <div class="founder-inner">
       <div class="founder-label">A note from the founder</div>
+      <img src="founder.jpg" alt="Sairaj, founder of Sideways Studio" class="founder-photo" />
       <div class="founder-body">
         <p>I&rsquo;m a Product designer who&rsquo;s practicing cinematography, a story teller who scores music. Creativity does not follow straight lines. Sideways Studio is the idea where it&rsquo;s all intersecting for me.</p>
         <p>When I got into cinematography, I faced a lot of challenges as a creator which I began solving using my other skills. Soon, 1,900+ creators began using the design I had built for their video planning. Now I&rsquo;m building it into the product it was always meant to be &mdash; in public. &amp; I want to build it with other creators, for every creator and every one who wants to get into this passion.</p>
