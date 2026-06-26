@@ -1391,6 +1391,28 @@
     .pv-ghost { max-width: 100%; }
     .diamond-sticker { width: 22px; height: 22px; margin-left: 12px; top: -3px; }
   }
+
+  /* ==================================================
+     S2 — scroll reveal (line by line)
+     ================================================== */
+  .story .chapter-marker,
+  .story .act > p,
+  .story .asterism,
+  .story .mirror-img-wrap,
+  .story .fleuron {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .story .chapter-marker.is-visible,
+  .story .act > p.is-visible,
+  .story .asterism.is-visible,
+  .story .mirror-img-wrap.is-visible,
+  .story .fleuron.is-visible {
+    opacity: 1;
+    transform: none;
+  }
 </style>
 </head>
 <body>
@@ -1808,6 +1830,47 @@
   } else {
     setTimeout(start, 800);
   }
+})();
+
+(function () {
+  /* S2 — line-by-line scroll reveal */
+  var sel = [
+    '.story .chapter-marker',
+    '.story .act > p',
+    '.story .asterism',
+    '.story .mirror-img-wrap',
+    '.story .fleuron'
+  ].join(',');
+
+  var els = Array.prototype.slice.call(document.querySelectorAll(sel));
+  if (!els.length) return;
+
+  /* Respect reduced-motion preference */
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    els.forEach(function (el) { el.classList.add('is-visible'); });
+    return;
+  }
+
+  var staggerIndex = 0;
+  var staggerTimer = null;
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      var el = entry.target;
+      el.style.transitionDelay = (staggerIndex * 80) + 'ms';
+      staggerIndex++;
+      clearTimeout(staggerTimer);
+      staggerTimer = setTimeout(function () { staggerIndex = 0; }, 220);
+      el.classList.add('is-visible');
+      observer.unobserve(el);
+    });
+  }, {
+    threshold: 0.18,
+    rootMargin: '0px 0px -6% 0px'
+  });
+
+  els.forEach(function (el) { observer.observe(el); });
 })();
 </script>
 </body>
