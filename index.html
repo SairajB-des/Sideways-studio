@@ -266,12 +266,8 @@
   }
 
   .chapter-marker {
-    position: absolute;
-    left: -260px;
-    top: 30px;
-    transform-origin: top left;
-    transform: rotate(90deg);
-    white-space: nowrap;
+    text-align: center;
+    margin-bottom: 72px;
     font-family: 'Fraunces', serif;
     font-variation-settings: "opsz" 14, "SOFT" 100;
     font-style: italic;
@@ -280,17 +276,14 @@
     letter-spacing: 0.32em;
     text-transform: uppercase;
     color: var(--soft-ink);
-    z-index: 6;
   }
   .chapter-marker::after {
     content: "";
-    display: inline-block;
-    width: 40px;
+    display: block;
+    width: 36px;
     height: 1px;
     background: var(--faint-ink);
-    vertical-align: middle;
-    margin-left: 22px;
-    transform: translateY(-2px);
+    margin: 10px auto 0;
   }
 
   .act { text-align: left; }
@@ -1325,19 +1318,9 @@
      =================================================== */
   @media (max-width: 1180px) {
     .chapter-marker {
-      position: relative;
-      left: 0;
-      top: 0;
-      transform: none;
-      text-align: center;
-      margin-bottom: 90px;
+      margin-bottom: 52px;
       font-size: 12px;
       letter-spacing: 0.28em;
-    }
-    .chapter-marker::after {
-      display: block;
-      margin: 14px auto 0;
-      transform: none;
     }
   }
   @media (max-width: 900px) {
@@ -1395,17 +1378,28 @@
   /* ==================================================
      S2 — scroll reveal (line by line)
      ================================================== */
-  .story .chapter-marker,
+  /* Title: settles in via letter-spacing - no lift */
+  .story .chapter-marker {
+    opacity: 0;
+    letter-spacing: 0.44em;
+    transform: none;
+    transition: opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+                letter-spacing 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .story .chapter-marker.is-visible {
+    opacity: 1;
+    letter-spacing: 0.32em;
+  }
+  /* Body text: fade up, measured rhythm (0.85s) */
   .story .act > p,
   .story .asterism,
   .story .mirror-img-wrap,
   .story .fleuron {
     opacity: 0;
-    transform: translateY(8px);
-    transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
-                transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    transform: translateY(10px);
+    transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  .story .chapter-marker.is-visible,
   .story .act > p.is-visible,
   .story .asterism.is-visible,
   .story .mirror-img-wrap.is-visible,
